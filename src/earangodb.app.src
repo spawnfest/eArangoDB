@@ -1,5 +1,5 @@
 {application, earangodb,
- [{description, "An OTP application"},
+ [{description, "An OTP application providing an API to work with ArangoDB database"},
   {vsn, "0.1.0"},
   {registered, []},
   {mod, {earangodb_app, []}},
