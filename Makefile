@@ -31,3 +31,4 @@ report_cover:
 build_docs:
 	rebar3 edoc
 	ex_doc "eArangoDB" "0.1" "_build/default/lib/earangodb/ebin" --paths "_build/default/lib/*/ebin"
+	mv doc docs
