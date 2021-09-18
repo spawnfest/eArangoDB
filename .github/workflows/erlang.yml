@@ -13,8 +13,8 @@ jobs:
       matrix:
         erl_vsn: [21.3, 22.1, 23.0.3, 24.0]
     steps:
-    - uses: actions/checkout@v2
-    - uses: gleam-lang/setup-erlang@v1.1.0
+    - uses: actions/checkout@v2.0.0
+    - uses: gleam-lang/setup-erlang@v1.1.2
 
       with:
         otp-version: ${{ matrix.erl_vsn }}
