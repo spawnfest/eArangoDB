@@ -9,8 +9,7 @@
 
 get_token(User, Password) ->
     ReqBody = jiffy:encode(#{username => User, password => Password}),
-    URIMap = build_url("/_open/auth"),
-    FullUrl = uri_string:recompose(URIMap),
+    FullUrl = build_url("/_open/auth"),
     Response = send_request_and_process_response(post, FullUrl, [], ReqBody),
     case Response of
         {ok, 200, #{<<"jwt">> := JWTToken}} ->
@@ -43,4 +42,4 @@ build_headers() ->
 
 build_url(Path) ->
     BaseUri = persistent_term:get(earangodb_conn_uri_map),
-    BaseUri#{path => Path}.
+    uri_string:recompose(BaseUri#{path => Path}).
