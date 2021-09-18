@@ -76,7 +76,7 @@ set_test_config(User, Password, Port) ->
     Config = #{
         user => User,
         password => Password,
-        url => "http://localhost",
+        url => "localhost",
         port => Port
     },
     persistent_term:put(earangodb_config, Config).

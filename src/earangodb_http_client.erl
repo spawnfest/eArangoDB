@@ -5,8 +5,8 @@
 get_token(User, Password, Url, Port) ->
     ReqBody = jiffy:encode(#{username => User, password => Password}),
     Headers = [],
-    % TODO use https://erlang.org/doc/man/uri_string.html#recompose-1
-    FullUrl = Url ++ ":" ++ integer_to_list(Port) ++ "/_open/auth",
+    URIMap = #{scheme => "http", host => Url, port => Port, path => "/_open/auth"},
+    FullUrl = uri_string:recompose(URIMap),
     Response = send_request_and_process_response(
         post, FullUrl, Headers, ReqBody
     ),
