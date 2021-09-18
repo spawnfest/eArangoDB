@@ -5,7 +5,11 @@
   {mod, {earangodb_app, []}},
   {applications,
    [kernel,
-    stdlib
+    stdlib,
+    public_key,
+    crypto,
+    ssl,
+    hackney
    ]},
   {env,[]},
   {modules, []},
