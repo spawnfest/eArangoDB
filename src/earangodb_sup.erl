@@ -16,13 +16,18 @@
 start_link(Config) ->
     supervisor:start_link({local, ?SERVER}, ?MODULE, Config).
 
-init(_Config) ->
+init(Config) ->
     SupFlags = #{
         strategy => one_for_all,
         intensity => 5,
         period => 5
     },
-    ChildSpecs = [],
+    ChildSpecs = [
+        #{
+            id => jwt_token_bearer,
+            start => {earangodb_token_bearer, start_link, [Config]}
+        }
+    ],
     {ok, {SupFlags, ChildSpecs}}.
 
 %% internal functions
