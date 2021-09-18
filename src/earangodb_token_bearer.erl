@@ -1,3 +1,7 @@
+%%% @author Aleksander Lisiecki <alek.lisiecki@gmail.com>
+%%% @hidden
+%%% @private
+%%%
 -module(earangodb_token_bearer).
 
 -behaviour(gen_server).

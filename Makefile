@@ -25,3 +25,9 @@ show_cover:
 
 report_cover:
 	rebar3 codecov analyze
+
+# Requires ex_doc to be installed locally
+# As described here: https://github.com/elixir-lang/ex_doc#using-exdoc-with-erlang-projects
+build_docs:
+	rebar3 edoc
+	ex_doc "eArangoDB" "0.1" "_build/default/lib/earangodb/ebin" --paths "_build/default/lib/*/ebin"

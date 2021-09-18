@@ -1,6 +1,6 @@
 %%% @author Aleksander Lisiecki <alek.lisiecki@gmail.com>
 %%% @doc
-%%% This module provides functions to work with collections, graphs
+%%% This module provides functions to work with collections, documents and graphs
 %%% It is a main API for this library.
 
 -module(earangodb).

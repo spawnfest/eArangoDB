@@ -1,8 +1,7 @@
-%%%-------------------------------------------------------------------
-%% @doc earangodb top level supervisor.
-%% @end
-%%%-------------------------------------------------------------------
-
+%%% @author Aleksander Lisiecki <alek.lisiecki@gmail.com>
+%%% @hidden
+%%% @private
+%%%
 -module(earangodb_sup).
 
 -behaviour(supervisor).
