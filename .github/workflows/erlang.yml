@@ -30,3 +30,13 @@ jobs:
 
     - name: Run tests
       run: make run_tests
+
+    - name: Run coverage
+      run: |
+          sudo pip install codecov && codecov
+          make report_cover
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: ./codecov.json

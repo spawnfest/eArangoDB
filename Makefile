@@ -1,4 +1,4 @@
-all: setup_db precommit
+all: setup_db precommit show_cover
 
 precommit: compile format run_type_checks run_tests
 
@@ -17,4 +17,11 @@ run_type_checks:
 	rebar3 dialyzer
 
 run_tests:
-	rebar3 eunit
+	rebar3 ct --cover
+	rebar3 eunit --cover
+
+show_cover:
+	rebar3 cover
+
+report_cover:
+	rebar3 codecov analyze
