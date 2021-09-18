@@ -1,15 +1,17 @@
 -module(earangodb_http_client).
 
--export([get_token/4]).
+-export([
+    get_token/2,
+    send_request_and_process_response/4,
+    build_headers/0,
+    build_url/1
+]).
 
-get_token(User, Password, Url, Port) ->
+get_token(User, Password) ->
     ReqBody = jiffy:encode(#{username => User, password => Password}),
-    Headers = [],
-    URIMap = #{scheme => "http", host => Url, port => Port, path => "/_open/auth"},
+    URIMap = build_url("/_open/auth"),
     FullUrl = uri_string:recompose(URIMap),
-    Response = send_request_and_process_response(
-        post, FullUrl, Headers, ReqBody
-    ),
+    Response = send_request_and_process_response(post, FullUrl, [], ReqBody),
     case Response of
         {ok, 200, #{<<"jwt">> := JWTToken}} ->
             {ok, JWTToken};
@@ -29,3 +31,16 @@ send_request_and_process_response(Method, Url, Headers, ReqBody) ->
         Response = {error, _Reason} ->
             Response
     end.
+
+build_headers() ->
+    Basic = <<"bearer ">>,
+    Val = earangodb_token_bearer:get_jwt_token(),
+    [
+        {<<"Authorization">>, <<Basic/binary, Val/binary>>},
+        {<<"Content-Type">>, <<"application/json">>},
+        {<<"Accept">>, <<"application/json">>}
+    ].
+
+build_url(Path) ->
+    BaseUri = persistent_term:get(earangodb_conn_uri_map),
+    BaseUri#{path => Path}.

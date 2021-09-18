@@ -22,8 +22,11 @@ stop(_State) ->
 
 %% internal functions
 
-start(Error = {error, _}) -> Error;
-start(Config) -> earangodb_sup:start_link(Config).
+start(Error = {error, _}) ->
+    Error;
+start(Config) ->
+    put_config_as_persistant_term(Config),
+    earangodb_sup:start_link(Config).
 
 -spec get_configuration() -> Result :: arangodb_conn_config() | {error, term()}.
 get_configuration() ->
@@ -40,3 +43,8 @@ validate_workers_config(undefined) ->
     {error, {earangodb_config, undefined}};
 validate_workers_config(WorkerConfig) ->
     {error, {"earangodb_config is miss configured", WorkerConfig}}.
+
+-spec put_config_as_persistant_term(arangodb_conn_config()) -> ok.
+put_config_as_persistant_term(#{url := Url, port := Port}) ->
+    UriMap = #{scheme => "http", host => Url, port => Port},
+    persistent_term:put(earangodb_conn_uri_map, UriMap).

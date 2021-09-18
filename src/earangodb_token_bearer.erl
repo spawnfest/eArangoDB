@@ -31,8 +31,8 @@ handle_info(refresh_jwt_token, DbLoginParams) ->
     {noreply, DbLoginParams}.
 
 -spec update_token(earangodb_app:arangodb_conn_config()) -> ok.
-update_token(#{user := User, password := Password, url := Url, port := Port}) ->
-    {ok, JWTToken} = earangodb_http_client:get_token(User, Password, Url, Port),
+update_token(#{user := User, password := Password}) ->
+    {ok, JWTToken} = earangodb_http_client:get_token(User, Password),
     persistent_term:put(?JWT_TOKEN_KEY, JWTToken).
 
 jwt_token_refresh_msg(DbLoginParams) ->
