@@ -66,10 +66,8 @@ when_graph_is_created_it_can_be_accessed(_Config) ->
     {ok, #{<<"graph">> := #{<<"name">> := GraphName}}} = earangodb_graphs:get(GraphName),
     {ok, _} = earangodb:graphs_delete(GraphName).
 
-
 when_graph_does_not_exist_it_cannot_be_accessed(_Config) ->
     GraphName = <<"test_graph">>,
     ?assertNot(graph_exists(GraphName)),
-    {error, _} = earangodb_graphs:get(GraphName),
+    {error, _} = earangodb:graphs_get(GraphName),
     ok.
-    

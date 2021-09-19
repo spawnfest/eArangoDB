@@ -7,7 +7,6 @@
 -export([
     get_token/2,
     send_request_and_unwrap_response/3,
-    build_url/1,
     maybe_binary_to_lst/1
 ]).
 
