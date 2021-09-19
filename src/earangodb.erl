@@ -22,7 +22,13 @@
     graphs_list/0,
     graphs_create/4,
     graphs_delete/1,
-    graphs_get/1
+    graphs_get/1,
+
+    graph_vertex_create/3,
+    graph_vertex_delete/3,
+    graph_vertex_get/3,
+    graph_vertex_update/4,
+    graph_vertex_replace/4
 ]).
 
 -ignore_xref([
@@ -40,7 +46,13 @@
     {?MODULE, graphs_list, 0},
     {?MODULE, graphs_create, 4},
     {?MODULE, graphs_delete, 1},
-    {?MODULE, graphs_get, 1}
+    {?MODULE, graphs_get, 1},
+
+    {?MODULE, graph_vertex_create, 3},
+    {?MODULE, graph_vertex_delete, 3},
+    {?MODULE, graph_vertex_get, 3},
+    {?MODULE, graph_vertex_update, 4},
+    {?MODULE, graph_vertex_replace, 4}
 ]).
 
 %%% @doc
@@ -128,3 +140,43 @@ graphs_delete(GraphName) -> earangodb_graphs:delete(GraphName).
 %%% Or returns a 404 if the graph does not exist.
 -spec graphs_get(GraphName :: binary()) -> maybe_ok().
 graphs_get(GraphName) -> earangodb_graphs:get(GraphName).
+
+%%% @doc
+%%% Adds a vertex to the given collection.
+-spec graph_vertex_create(
+    GraphName :: binary(), CollectionName :: binary(), VertexDocument :: map()
+) -> maybe_ok().
+graph_vertex_create(GraphName, CollectionName, VertexDocument) ->
+    earangodb_graph_vertexes:create(GraphName, CollectionName, VertexDocument).
+
+%%% @doc
+%%% Removes a vertex from the collection.
+-spec graph_vertex_delete(GraphName :: binary(), CollectionName :: binary(), VertexKey :: binary()) ->
+    maybe_ok().
+graph_vertex_delete(GraphName, CollectionName, VertexKey) ->
+    earangodb_graph_vertexes:delete(GraphName, CollectionName, VertexKey).
+
+%%% @doc
+%%% Gets a vertex from the collection with a given key.
+-spec graph_vertex_get(GraphName :: binary(), CollectionName :: binary(), VertexKey :: binary()) ->
+    maybe_ok().
+graph_vertex_get(GraphName, CollectionName, VertexKey) ->
+    earangodb_graph_vertexes:get(GraphName, CollectionName, VertexKey).
+
+%%% @doc
+%%% Updates the data of the specific vertex in the collection.
+-spec graph_vertex_update(
+    GraphName :: binary(), CollectionName :: binary(), VertexKey :: binary(), UpdateDoc :: map()
+) ->
+    maybe_ok().
+graph_vertex_update(GraphName, CollectionName, VertexKey, UpdateDoc) ->
+    earangodb_graph_vertexes:update(GraphName, CollectionName, VertexKey, UpdateDoc).
+
+%%% @doc
+%%% Replaces the data of the specific vertex in the collection.
+-spec graph_vertex_replace(
+    GraphName :: binary(), CollectionName :: binary(), VertexKey :: binary(), ReplaceDoc :: map()
+) ->
+    maybe_ok().
+graph_vertex_replace(GraphName, CollectionName, VertexKey, ReplaceDoc) ->
+    earangodb_graph_vertexes:replace(GraphName, CollectionName, VertexKey, ReplaceDoc).

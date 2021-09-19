@@ -32,4 +32,4 @@ delete(GraphName) ->
 
 get(GraphName) ->
   Url = "/_api/gharial/" ++ earangodb_http_client:maybe_binary_to_lst(GraphName),
-    earangodb_http_client:send_request_and_unwrap_response(get, Url, <<"">>).
+  earangodb_http_client:send_request_and_unwrap_response(get, Url, <<"">>).
