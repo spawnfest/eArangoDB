@@ -8,6 +8,7 @@
 -type ok_response_or_error_reason() :: {ok, map()} | {error, Reason :: term()}.
 
 -export([
+    execute_query/1,
     collections_list/0,
     collection_create/1,
     collection_create/2,
@@ -37,6 +38,7 @@
 ]).
 
 -ignore_xref([
+    {?MODULE, execute_query, 1},
     {?MODULE, collections_list, 0},
     {?MODULE, collection_create, 1},
     {?MODULE, collection_create, 2},
@@ -64,6 +66,13 @@
     {?MODULE, graph_edge_get, 3},
     {?MODULE, graph_edge_update, 4}
 ]).
+
+%%% @doc
+%%% Allows to execute AQL queries.
+-spec execute_query(Query :: binary()) -> ok_response_or_error_reason().
+execute_query(Query) ->
+    Body = jiffy:encode(#{<<"query">> => Query}),
+    earangodb_http_client:send_request_and_unwrap_response(post, "/_api/query", Body).
 
 %%% @doc
 %%% Returns an object with an attribute result containing an array of all collection descriptions.

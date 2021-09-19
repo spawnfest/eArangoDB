@@ -5,7 +5,7 @@
 
 -compile(export_all).
 
--define(CollectionName, <<"mycolecton">>).
+-define(CollectionName, <<"MyColecton">>).
 
 -import(earangodb_config_test_helper, [
     set_test_config/0
@@ -45,7 +45,8 @@ all() ->
         not_existing_document_cannot_be_read,
         replacing_existing_document_changes_it_completly,
         updating_existing_document_changes_only_updated_keys,
-        when_deleted_document_cannot_be_read
+        when_deleted_document_cannot_be_read,
+        aql_query_works_for_checking_docs
     ].
 
 add_some_documents_to_collection(_Config) ->
@@ -102,3 +103,13 @@ when_deleted_document_cannot_be_read(_Config) ->
     {ok, _} = earangodb:document_read(?CollectionName, DocumentKey),
     {ok, _} = earangodb:document_delete(?CollectionName, DocumentKey),
     {error, _} = earangodb:document_read(?CollectionName, DocumentKey).
+
+aql_query_works_for_checking_docs(_Config) ->
+    DocumentA = #{'_key' => <<"doc_a">>, b => 1, c => <<"wrong">>},
+    DocumentB = #{'_key' => <<"doc_b">>, b => 2, c => <<"right">>},
+    DocumentC = #{'_key' => <<"doc_c">>, b => 2, c => <<"right">>},
+    {ok, _} = earangodb:document_create(?CollectionName, DocumentA),
+    {ok, _} = earangodb:document_create(?CollectionName, DocumentB),
+    {ok, _} = earangodb:document_create(?CollectionName, DocumentC),
+    {ok, _} = earangodb:execute_query(<<"FOR d IN MyColecton FILTER d.b == 2 RETURN d.c">>),
+    ok.
