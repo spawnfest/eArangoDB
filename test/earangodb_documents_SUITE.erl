@@ -44,7 +44,8 @@ all() ->
         document_with_a_given_key_can_be_read,
         not_existing_document_cannot_be_read,
         replacing_existing_document_changes_it_completly,
-        updating_existing_document_changes_only_updated_keys
+        updating_existing_document_changes_only_updated_keys,
+        when_deleted_document_cannot_be_read
     ].
 
 add_some_documents_to_collection(_Config) ->
