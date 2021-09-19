@@ -10,7 +10,7 @@
     <title>earangodb — eArangoDB v0.1</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-3c4dd40d61.js"></script>
+    <script src="dist/sidebar_items-fceebdf61c.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -200,6 +200,42 @@ This module provides functions to work with collections, documents and graphs. I
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#graph_edge_create/5">graph_edge_create(GraphName, EdgesCollectionName, FromVertex, ToVertex, Properties)</a>
+
+  </div>
+
+    <div class="summary-synopsis">Creates a new edge in the collection.</div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#graph_edge_delete/3">graph_edge_delete(GraphName, CollectionName, EdgeKey)</a>
+
+  </div>
+
+    <div class="summary-synopsis">Removes an edge from the collection.</div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#graph_edge_get/3">graph_edge_get(GraphName, CollectionName, EdgeKey)</a>
+
+  </div>
+
+    <div class="summary-synopsis">Gets an edge from the given collection.</div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#graph_edge_update/4">graph_edge_update(GraphName, CollectionName, EdgeKey, UpdateDoc)</a>
+
+  </div>
+
+    <div class="summary-synopsis">Updates an edge from the given collection.</div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#graph_vertex_create/3">graph_vertex_create(GraphName, CollectionName, VertexDocument)</a>
 
   </div>
@@ -311,7 +347,7 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre></pre>
+          <pre>ok_response_or_error_reason() :: {ok, map()} | {error, Reason :: term()}.</pre>
 
       </div>
 
@@ -348,7 +384,7 @@ Functions
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>collection_create(Name :: binary()) -> <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+          <pre>collection_create(Name :: binary()) -> <a href="#t:ok_response_or_error_reason/0">ok_response_or_error_reason</a>().</pre>
 
       </div>
 
@@ -373,7 +409,7 @@ The same as <code>collection_create(Name, document)</code> function
       <div class="specs">
 
           <pre>collection_create(Name :: binary(), CollectionType :: <a href="earangodb_collections.html#t:collection_type/0">earangodb_collections:collection_type</a>()) ->
-                     <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+                     <a href="#t:ok_response_or_error_reason/0">ok_response_or_error_reason</a>().</pre>
 
       </div>
 
@@ -397,7 +433,7 @@ Creates a new collection with a given name and type.
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>collection_delete(Name :: binary()) -> <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+          <pre>collection_delete(Name :: binary()) -> <a href="#t:ok_response_or_error_reason/0">ok_response_or_error_reason</a>().</pre>
 
       </div>
 
@@ -445,7 +481,7 @@ Returns an object with an attribute result containing an array of all collection
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>document_create(CollectionName :: binary(), Document :: map()) -> <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+          <pre>document_create(CollectionName :: binary(), Document :: map()) -> <a href="#t:ok_response_or_error_reason/0">ok_response_or_error_reason</a>().</pre>
 
       </div>
 
@@ -469,7 +505,8 @@ Creates a new document from the document given in the body, unless there is alre
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>document_delete(CollectionName :: binary(), DocumentKey :: binary()) -> <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+          <pre>document_delete(CollectionName :: binary(), DocumentKey :: binary()) ->
+                   <a href="#t:ok_response_or_error_reason/0">ok_response_or_error_reason</a>().</pre>
 
       </div>
 
@@ -493,7 +530,8 @@ Deletes the specified document with a given key.
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>document_read(CollectionName :: binary(), DocumentKey :: binary()) -> <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+          <pre>document_read(CollectionName :: binary(), DocumentKey :: binary()) ->
+                 <a href="#t:ok_response_or_error_reason/0">ok_response_or_error_reason</a>().</pre>
 
       </div>
 
@@ -518,7 +556,7 @@ Returns the document identified by document-id. The returned document contains t
       <div class="specs">
 
           <pre>document_replace(CollectionName :: binary(), DocumentKey :: binary(), Document :: map()) ->
-                    <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+                    <a href="#t:ok_response_or_error_reason/0">ok_response_or_error_reason</a>().</pre>
 
       </div>
 
@@ -543,11 +581,118 @@ Replaces the specified document with the one in the body, provided there is such
       <div class="specs">
 
           <pre>document_update(CollectionName :: binary(), DocumentKey :: binary(), Document :: map()) ->
-                   <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+                   <a href="#t:ok_response_or_error_reason/0">ok_response_or_error_reason</a>().</pre>
 
       </div>
 
 Partially updates the document identified by document-id. The body of the request must contain a JSON document with the attributes to patch (the patch document). All attributes from the patch document will be added to the existing document if they do not yet exist, and overwritten in the existing document if they do exist there.
+  </section>
+</section>
+<section class="detail" id="graph_edge_create/5">
+
+  <div class="detail-header">
+    <a href="#graph_edge_create/5" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">graph_edge_create(GraphName, EdgesCollectionName, FromVertex, ToVertex, Properties)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>graph_edge_create(GraphName :: binary(),
+                  EdgesCollectionName :: binary(),
+                  FromVertex :: integer(),
+                  ToVertex :: integer(),
+                  Properties :: map()) ->
+                     <a href="#t:ok_response_or_error_reason/0">ok_response_or_error_reason</a>().</pre>
+
+      </div>
+
+Creates a new edge in the collection.
+  </section>
+</section>
+<section class="detail" id="graph_edge_delete/3">
+
+  <div class="detail-header">
+    <a href="#graph_edge_delete/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">graph_edge_delete(GraphName, CollectionName, EdgeKey)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>graph_edge_delete(GraphName :: binary(), CollectionName :: binary(), EdgeKey :: binary()) ->
+                     <a href="#t:ok_response_or_error_reason/0">ok_response_or_error_reason</a>().</pre>
+
+      </div>
+
+Removes an edge from the collection.
+  </section>
+</section>
+<section class="detail" id="graph_edge_get/3">
+
+  <div class="detail-header">
+    <a href="#graph_edge_get/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">graph_edge_get(GraphName, CollectionName, EdgeKey)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>graph_edge_get(GraphName :: binary(), CollectionName :: binary(), EdgeKey :: binary()) ->
+                  <a href="#t:ok_response_or_error_reason/0">ok_response_or_error_reason</a>().</pre>
+
+      </div>
+
+Gets an edge from the given collection.
+  </section>
+</section>
+<section class="detail" id="graph_edge_update/4">
+
+  <div class="detail-header">
+    <a href="#graph_edge_update/4" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">graph_edge_update(GraphName, CollectionName, EdgeKey, UpdateDoc)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>graph_edge_update(GraphName :: binary(),
+                  CollectionName :: binary(),
+                  EdgeKey :: binary(),
+                  UpdateDoc :: map()) ->
+                     <a href="#t:ok_response_or_error_reason/0">ok_response_or_error_reason</a>().</pre>
+
+      </div>
+
+Updates an edge from the given collection.
   </section>
 </section>
 <section class="detail" id="graph_vertex_create/3">
@@ -568,7 +713,7 @@ Partially updates the document identified by document-id. The body of the reques
       <div class="specs">
 
           <pre>graph_vertex_create(GraphName :: binary(), CollectionName :: binary(), VertexDocument :: map()) ->
-                       <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+                       <a href="#t:ok_response_or_error_reason/0">ok_response_or_error_reason</a>().</pre>
 
       </div>
 
@@ -593,7 +738,7 @@ Adds a vertex to the given collection.
       <div class="specs">
 
           <pre>graph_vertex_delete(GraphName :: binary(), CollectionName :: binary(), VertexKey :: binary()) ->
-                       <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+                       <a href="#t:ok_response_or_error_reason/0">ok_response_or_error_reason</a>().</pre>
 
       </div>
 
@@ -618,7 +763,7 @@ Removes a vertex from the collection.
       <div class="specs">
 
           <pre>graph_vertex_get(GraphName :: binary(), CollectionName :: binary(), VertexKey :: binary()) ->
-                    <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+                    <a href="#t:ok_response_or_error_reason/0">ok_response_or_error_reason</a>().</pre>
 
       </div>
 
@@ -646,7 +791,7 @@ Gets a vertex from the collection with a given key.
                      CollectionName :: binary(),
                      VertexKey :: binary(),
                      ReplaceDoc :: map()) ->
-                        <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+                        <a href="#t:ok_response_or_error_reason/0">ok_response_or_error_reason</a>().</pre>
 
       </div>
 
@@ -674,7 +819,7 @@ Replaces the data of the specific vertex in the collection.
                     CollectionName :: binary(),
                     VertexKey :: binary(),
                     UpdateDoc :: map()) ->
-                       <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+                       <a href="#t:ok_response_or_error_reason/0">ok_response_or_error_reason</a>().</pre>
 
       </div>
 
@@ -702,7 +847,7 @@ Updates the data of the specific vertex in the collection.
               EdgesCollection :: binary(),
               FromCollections :: [binary()],
               ToCollections :: [binary()]) ->
-                 <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+                 <a href="#t:ok_response_or_error_reason/0">ok_response_or_error_reason</a>().</pre>
 
       </div>
 
@@ -726,7 +871,7 @@ The creation of a graph requires the name of the graph and a definition of its e
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>graphs_delete(GraphName :: binary()) -> <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+          <pre>graphs_delete(GraphName :: binary()) -> <a href="#t:ok_response_or_error_reason/0">ok_response_or_error_reason</a>().</pre>
 
       </div>
 
@@ -750,7 +895,7 @@ Drops an existing graph object by name.
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>graphs_get(GraphName :: binary()) -> <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+          <pre>graphs_get(GraphName :: binary()) -> <a href="#t:ok_response_or_error_reason/0">ok_response_or_error_reason</a>().</pre>
 
       </div>
 
@@ -774,7 +919,7 @@ Selects information for a given graph. Will return the edge definitions as well 
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>graphs_list() -> <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+          <pre>graphs_list() -> <a href="#t:ok_response_or_error_reason/0">ok_response_or_error_reason</a>().</pre>
 
       </div>
 
