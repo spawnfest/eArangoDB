@@ -48,3 +48,7 @@ start(_StartType, _StartArgs) ->
 ```
 
 You may alternatively put this code under a separate supervisor's init.
+
+# DEMO
+
+To see the demo use case of this lib by going to: `demo/demo_cities/README.md`
