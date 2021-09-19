@@ -8,7 +8,7 @@
 -type ok_response_or_error_reason() :: {ok, map()} | {error, Reason :: term()}.
 
 -export([
-    execute_query/1,
+    execute_query/3,
     collections_list/0,
     collection_create/1,
     collection_create/2,
@@ -38,7 +38,7 @@
 ]).
 
 -ignore_xref([
-    {?MODULE, execute_query, 1},
+    {?MODULE, execute_query, 3},
     {?MODULE, collections_list, 0},
     {?MODULE, collection_create, 1},
     {?MODULE, collection_create, 2},
@@ -69,10 +69,30 @@
 
 %%% @doc
 %%% Allows to execute AQL queries.
--spec execute_query(Query :: binary()) -> ok_response_or_error_reason().
-execute_query(Query) ->
-    Body = jiffy:encode(#{<<"query">> => Query}),
-    earangodb_http_client:send_request_and_unwrap_response(post, "/_api/query", Body).
+-spec execute_query(Query :: binary(), Count :: boolean(), BatchSize :: pos_integer()) ->
+    {ok, Result :: [map()]} | {error, Reason :: term()}.
+execute_query(Query, Count, BatchSize) ->
+    Body = jiffy:encode(#{<<"query">> => Query, count => Count, batchSize => BatchSize}),
+    case earangodb_http_client:send_request_and_unwrap_response(post, "/_api/cursor", Body) of
+        Error = {error, _} ->
+            Error;
+        {ok, #{<<"hasMore">> := false, <<"result">> := Results}} ->
+            {ok, Results};
+        {ok, #{<<"hasMore">> := true, <<"result">> := Results, <<"id">> := CoursorId}} ->
+            keep_on_fetching(Query, Count, BatchSize, CoursorId, Results)
+    end.
+
+keep_on_fetching(Query, Count, BatchSize, CoursorId, Results) ->
+    Body = jiffy:encode(#{
+        <<"query">> => Query, count => Count, batchSize => BatchSize
+    }),
+    Url = "/_api/cursor/" ++ earangodb_http_client:maybe_binary_to_lst(CoursorId),
+    case earangodb_http_client:send_request_and_unwrap_response(post, Url, Body) of
+        {ok, #{<<"hasMore">> := false, <<"result">> := NewResults}} ->
+            {ok, NewResults ++ Results};
+        {ok, #{<<"hasMore">> := true, <<"result">> := NewResults, <<"id">> := NewCoursorId}} ->
+            keep_on_fetching(Query, Count, BatchSize, NewCoursorId, NewResults ++ Results)
+    end.
 
 %%% @doc
 %%% Returns an object with an attribute result containing an array of all collection descriptions.

@@ -106,10 +106,22 @@ when_deleted_document_cannot_be_read(_Config) ->
 
 aql_query_works_for_checking_docs(_Config) ->
     DocumentA = #{'_key' => <<"doc_a">>, b => 1, c => <<"wrong">>},
-    DocumentB = #{'_key' => <<"doc_b">>, b => 2, c => <<"right">>},
-    DocumentC = #{'_key' => <<"doc_c">>, b => 2, c => <<"right">>},
     {ok, _} = earangodb:document_create(?CollectionName, DocumentA),
-    {ok, _} = earangodb:document_create(?CollectionName, DocumentB),
-    {ok, _} = earangodb:document_create(?CollectionName, DocumentC),
-    {ok, _} = earangodb:execute_query(<<"FOR d IN MyColecton FILTER d.b == 2 RETURN d.c">>),
+    lists:map(
+        fun(Key) ->
+            DocumentB = #{'_key' => Key, b => 2, c => <<"right">>},
+            {ok, _} = earangodb:document_create(?CollectionName, DocumentB)
+        end,
+        [<<"doc_b">>, <<"doc_c">>, <<"doc_d">>, <<"doc_e">>]
+    ),
+    QueryResult = {ok, [<<"right">> || _ <- lists:seq(1, 4)]},
+    QueryResult = earangodb:execute_query(
+        <<"FOR d IN MyColecton FILTER d.b == 2 RETURN d.c">>, true, 10
+    ),
+    QueryResult = earangodb:execute_query(
+        <<"FOR d IN MyColecton FILTER d.b == 2 RETURN d.c">>, true, 1
+    ),
+    {error, _} = earangodb:execute_query(
+        <<"FOR d INN MyColecton FILTER d.b == 2 RETURN d.c">>, true, 3
+    ),
     ok.
