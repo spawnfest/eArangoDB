@@ -2,15 +2,18 @@
 %%% @hidden
 %%% @private
 %%%
--module(earangodb_colections).
+-module(earangodb_collections).
 
--export_type([collection_info/0]).
+-export_type([collection_type/0, collection_info/0]).
+
 -type collection_info() ::
     #{ Key :: binary() => Value :: binary() | boolean() | integer() }.
 
+-type collection_type() :: document | edge.
+
 -export([
     list/0,
-    create/1,
+    create/2,
     delete/1
 ]).
 
@@ -22,16 +25,19 @@ list() ->
     {ok, 200, #{<<"result">> := Result}} = Response,
     Result.
 
--spec create(Name :: binary()) -> ok | {error, Reason :: term()}.
-create(Name) ->
+-spec create(Name :: binary(), CollectionType :: collection_type()) -> ok | {error, Reason :: term()}.
+create(Name, CollectionType) ->
     Url = earangodb_http_client:build_url("/_api/collection"),
     Headers = earangodb_http_client:build_headers(),
-    Body = jiffy:encode(#{name => Name}),
+    Body = jiffy:encode(#{name => Name, type => collection_type(CollectionType)}),
     Response = earangodb_http_client:send_request_and_process_response(post, Url, Headers, Body),
     case Response of
         {ok, 200, _} -> ok;
         Error -> {error, Error}
     end.
+
+collection_type(document) -> 2;
+collection_type(edge) -> 3.
 
 -spec delete(Name :: binary()) -> ok | {error, Reason :: term()}.
 delete(Name) ->

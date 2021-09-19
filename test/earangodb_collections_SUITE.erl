@@ -1,4 +1,4 @@
--module(earangodb_colections_SUITE).
+-module(earangodb_collections_SUITE).
 
 -include_lib("common_test/include/ct.hrl").
 -include_lib("eunit/include/eunit.hrl").
@@ -21,13 +21,13 @@ end_per_testcase(_Case, _Config) -> ok.
 
 all() ->
     [
-        colections_list_returns_list_containing_colections_id,
+        collections_list_returns_list_containing_collections_id,
         collection_is_created_and_deleted,
         creating_already_existing_collection_fails,
         deleting_not_existing_collection_fails
     ].
 
-colections_list_returns_list_containing_colections_id(_Config) ->
+collections_list_returns_list_containing_collections_id(_Config) ->
     [#{<<"id">> := _} | _] = earangodb:collections_list().
 
 collection_is_created_and_deleted(_Config) ->
@@ -47,7 +47,7 @@ collection_is_created_and_deleted(_Config) ->
 
 creating_already_existing_collection_fails(_Config) ->
     CollectionName = <<"test_collection_name">>,
-    ok = earangodb:collection_create(CollectionName),
+    ok = earangodb:collection_create(CollectionName, edge),
     ?assertMatch({error, _}, earangodb:collection_create(CollectionName)),
     ok = earangodb:collection_delete(CollectionName).
 

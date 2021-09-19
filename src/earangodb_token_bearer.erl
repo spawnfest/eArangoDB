@@ -9,8 +9,7 @@
 -define(JWT_TOKEN_KEY, arango_db_jwt_token).
 
 -ignore_xref([
-    {?MODULE, start_link, 1},
-    {?MODULE, get_jwt_token, 0}
+    {?MODULE, start_link, 1}
 ]).
 
 -export([start_link/1]).
