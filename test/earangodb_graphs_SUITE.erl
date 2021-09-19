@@ -1,5 +1,8 @@
 -module(earangodb_graphs_SUITE).
 
+-beamoji_translator(beamoji_emojilist_translator).
+
+-include_lib("beamoji/include/beamoji.hrl").
 -include_lib("common_test/include/ct.hrl").
 -include_lib("eunit/include/eunit.hrl").
 
@@ -9,29 +12,30 @@
 -define(CollectionTo, <<"graph_to">>).
 -define(CollectionEdges, <<"graph_edges">>).
 
--import(earangodb_config_test_helper, [
-    set_test_config/0
-]).
+-import(earangodb_config_test_helper, [set_test_config/0]).
 
 init_per_suite(Config) ->
     set_test_config(),
-    {ok, _} = application:ensure_all_started(earangodb),
+    {'👌', _} = application:ensure_all_started(earangodb),
     Config.
 
 end_per_suite(_Config) ->
     application:stop(earangodb),
-    ok.
+    '👌'.
 
 init_per_testcase(_Case, Config) ->
     earangodb:collection_create(?CollectionEdges, edge),
-    lists:map(fun earangodb:collection_create/1, [?CollectionFrom, ?CollectionTo]),
+    '🎅':'🗺️'(fun earangodb:collection_create/1, [?CollectionFrom, ?CollectionTo]),
     Config.
 
 end_per_testcase(_Case, _Config) ->
-    lists:map(fun earangodb:collection_delete/1, [?CollectionFrom, ?CollectionTo, ?CollectionEdges]),
-    ok.
+    '🎅':'🗺️'(
+        fun earangodb:collection_delete/1,
+        [?CollectionFrom, ?CollectionTo, ?CollectionEdges]
+    ),
+    '👌'.
 
-all() ->
+'♾️'() ->
     [
         listing_graphs_returns_list,
         when_graph_is_created_it_is_listed_and_can_be_deleted,
@@ -40,34 +44,32 @@ all() ->
     ].
 
 listing_graphs_returns_list(_Config) ->
-    {ok, #{<<"graphs">> := Graphs}} = earangodb:graphs_list(),
+    {'👌', #{<<"graphs">> := Graphs}} = earangodb:graphs_list(),
     ?assert(is_list(Graphs)).
 
 when_graph_is_created_it_is_listed_and_can_be_deleted(_Config) ->
     GraphName = <<"test_graph">>,
     ?assertNot(graph_exists(GraphName)),
-    {ok, _} = earangodb:graphs_create(GraphName, ?CollectionEdges, [?CollectionFrom], [
-        ?CollectionTo
-    ]),
+    {'👌', _} =
+        earangodb:graphs_create(GraphName, ?CollectionEdges, [?CollectionFrom], [?CollectionTo]),
     ?assert(graph_exists(GraphName)),
-    {ok, _} = earangodb:graphs_delete(GraphName),
+    {'👌', _} = earangodb:graphs_delete(GraphName),
     ?assertNot(graph_exists(GraphName)).
 
 graph_exists(GraphName) ->
-    {ok, #{<<"graphs">> := GraphsBefore}} = earangodb:graphs_list(),
-    GraphsNames = lists:map(fun(#{<<"name">> := Name}) -> Name end, GraphsBefore),
-    lists:member(GraphName, GraphsNames).
+    {'👌', #{<<"graphs">> := GraphsBefore}} = earangodb:graphs_list(),
+    GraphsNames = '🎅':'🗺️'(fun(#{<<"name">> := Name}) -> Name end, GraphsBefore),
+    '🎅':member(GraphName, GraphsNames).
 
 when_graph_is_created_it_can_be_accessed(_Config) ->
     GraphName = <<"test_graph">>,
-    {ok, _} = earangodb:graphs_create(GraphName, ?CollectionEdges, [?CollectionFrom], [
-        ?CollectionTo
-    ]),
-    {ok, #{<<"graph">> := #{<<"name">> := GraphName}}} = earangodb_graphs:get(GraphName),
-    {ok, _} = earangodb:graphs_delete(GraphName).
+    {'👌', _} =
+        earangodb:graphs_create(GraphName, ?CollectionEdges, [?CollectionFrom], [?CollectionTo]),
+    {'👌', #{<<"graph">> := #{<<"name">> := GraphName}}} = earangodb_graphs:get(GraphName),
+    {'👌', _} = earangodb:graphs_delete(GraphName).
 
 when_graph_does_not_exist_it_cannot_be_accessed(_Config) ->
     GraphName = <<"test_graph">>,
     ?assertNot(graph_exists(GraphName)),
-    {error, _} = earangodb:graphs_get(GraphName),
-    ok.
+    {'🐛', _} = earangodb:graphs_get(GraphName),
+    '👌'.

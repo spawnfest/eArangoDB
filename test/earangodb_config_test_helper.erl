@@ -1,5 +1,9 @@
 -module(earangodb_config_test_helper).
 
+-beamoji_translator(beamoji_emojilist_translator).
+
+-include_lib("beamoji/include/beamoji.hrl").
+
 -export([set_test_config/0, set_test_config/2, set_test_config/3]).
 
 set_test_config() ->
@@ -12,10 +16,11 @@ set_test_config(User, Password, Port) ->
     set_test_config(User, Password, Port, "localhost").
 
 set_test_config(User, Password, Port, Url) ->
-    Config = #{
-        user => User,
-        password => Password,
-        url => Url,
-        port => Port
-    },
+    Config =
+        #{
+            user => User,
+            password => Password,
+            url => Url,
+            port => Port
+        },
     persistent_term:put(earangodb_config, Config).
