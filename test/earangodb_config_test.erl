@@ -2,6 +2,11 @@
 
 -include_lib("eunit/include/eunit.hrl").
 
+-import(earangodb_config_test_helper, [
+    set_test_config/2,
+    set_test_config/3
+]).
+
 earangodb_config_test_() ->
     {
         foreach,
@@ -68,15 +73,3 @@ token_bearer_logs_unexpected_casts() ->
     ?assertMatch({ok, _}, application:ensure_all_started(earangodb)),
     ok = gen_server:cast(earangodb_token_bearer, any),
     application:stop(earangodb).
-
-set_test_config(User, Password) ->
-    set_test_config(User, Password, 8529).
-
-set_test_config(User, Password, Port) ->
-    Config = #{
-        user => User,
-        password => Password,
-        url => "localhost",
-        port => Port
-    },
-    persistent_term:put(earangodb_config, Config).

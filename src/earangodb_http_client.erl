@@ -8,7 +8,9 @@
     get_token/2,
     send_request_and_process_response/4,
     build_headers/0,
-    build_url/1
+    build_url/1,
+    unwrap_response/1,
+    maybe_binary_to_lst/1
 ]).
 
 get_token(User, Password) ->
@@ -47,3 +49,11 @@ build_headers() ->
 build_url(Path) ->
     BaseUri = persistent_term:get(earangodb_conn_uri_map),
     uri_string:recompose(BaseUri#{path => Path}).
+
+unwrap_response({ok, Code, Body}) when Code == 200 orelse Code == 201 orelse Code == 202 ->
+    {ok, Body};
+unwrap_response({ok, Code, #{<<"code">> := Code, <<"errorMessage">> := ErrMsg}}) ->
+    {error, {Code, ErrMsg}}.
+
+maybe_binary_to_lst(String) when is_list(String) -> String;
+maybe_binary_to_lst(String) when is_binary(String) -> binary_to_list(String).
