@@ -10,7 +10,7 @@
     <title>earangodb — eArangoDB v0.1</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-e310e83bf9.js"></script>
+    <script src="dist/sidebar_items-81fd857e5b.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -99,6 +99,20 @@ This module provides functions to work with collections, documents and graphs. I
             Summary
           </h1>
 
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:maybe_ok/0">maybe_ok/0</a>
+
+  </div>
+
+</div>
+
+  </div>
+
   <div class="summary-functions summary">
     <h2>
       <a href="#functions">Functions</a>
@@ -139,11 +153,93 @@ This module provides functions to work with collections, documents and graphs. I
     <div class="summary-synopsis">Returns an object with an attribute result containing an array of all collection descriptions.</div>
 
 </div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#document_create/2">document_create(CollectionName, Document)</a>
+
+  </div>
+
+    <div class="summary-synopsis">Creates a new document from the document given in the body, unless there is already a document with the _key given.</div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#document_delete/2">document_delete(CollectionName, DocumentKey)</a>
+
+  </div>
+
+    <div class="summary-synopsis">Deletes the specified document with a given key.</div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#document_read/2">document_read(CollectionName, DocumentKey)</a>
+
+  </div>
+
+    <div class="summary-synopsis">Returns the document identified by document-id. The returned document contains three special attribute _key containing key which uniquely identifies a document in a given collection.</div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#document_replace/3">document_replace(CollectionName, DocumentKey, Document)</a>
+
+  </div>
+
+    <div class="summary-synopsis">Replaces the specified document with the one in the body, provided there is such a document .</div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#document_update/3">document_update(CollectionName, DocumentKey, Document)</a>
+
+  </div>
+
+    <div class="summary-synopsis">Partially updates the document identified by document-id. The body of the request must contain a JSON document with the attributes to patch (the patch document). All attributes from the patch document will be added to the existing document if they do not yet exist, and overwritten in the existing document if they do exist there.</div>
+
+</div>
 
   </div>
 
         </section>
 
+
+        <section id="types" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#types">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Types
+          </h1>
+          <div class="types-list">
+<section class="detail" id="t:maybe_ok/0">
+
+  <div class="detail-header">
+    <a href="#t:maybe_ok/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">maybe_ok/0</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>maybe_ok() :: {ok, map()} | {error, Reason :: term()}.</pre>
+
+      </div>
+
+
+  </section>
+</section>
+
+          </div>
+        </section>
 
         <section id="functions" class="details-list">
           <h1 class="section-heading">
@@ -171,7 +267,7 @@ Functions
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>collection_create(Name :: binary()) -> ok | {error, Reason :: term()}.</pre>
+          <pre>collection_create(Name :: binary()) -> <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
 
       </div>
 
@@ -196,7 +292,7 @@ The same as <code>collection_create(Name, document)</code> function
       <div class="specs">
 
           <pre>collection_create(Name :: binary(), CollectionType :: <a href="earangodb_collections.html#t:collection_type/0">earangodb_collections:collection_type</a>()) ->
-                     ok | {error, Reason :: term()}.</pre>
+                     <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
 
       </div>
 
@@ -220,7 +316,7 @@ Creates a new collection with a given name and type.
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>collection_delete(Name :: binary()) -> ok | {error, Reason :: term()}.</pre>
+          <pre>collection_delete(Name :: binary()) -> <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
 
       </div>
 
@@ -249,6 +345,128 @@ Drops the collection identified by collection-name.
       </div>
 
 Returns an object with an attribute result containing an array of all collection descriptions.
+  </section>
+</section>
+<section class="detail" id="document_create/2">
+
+  <div class="detail-header">
+    <a href="#document_create/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">document_create(CollectionName, Document)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>document_create(CollectionName :: binary(), Document :: map()) -> <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+
+      </div>
+
+Creates a new document from the document given in the body, unless there is already a document with the _key given.
+  </section>
+</section>
+<section class="detail" id="document_delete/2">
+
+  <div class="detail-header">
+    <a href="#document_delete/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">document_delete(CollectionName, DocumentKey)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>document_delete(CollectionName :: binary(), DocumentKey :: binary()) -> <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+
+      </div>
+
+Deletes the specified document with a given key.
+  </section>
+</section>
+<section class="detail" id="document_read/2">
+
+  <div class="detail-header">
+    <a href="#document_read/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">document_read(CollectionName, DocumentKey)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>document_read(CollectionName :: binary(), DocumentKey :: binary()) -> <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+
+      </div>
+
+Returns the document identified by document-id. The returned document contains three special attribute _key containing key which uniquely identifies a document in a given collection.
+  </section>
+</section>
+<section class="detail" id="document_replace/3">
+
+  <div class="detail-header">
+    <a href="#document_replace/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">document_replace(CollectionName, DocumentKey, Document)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>document_replace(CollectionName :: binary(), DocumentKey :: binary(), Document :: map()) ->
+                    <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+
+      </div>
+
+Replaces the specified document with the one in the body, provided there is such a document .
+  </section>
+</section>
+<section class="detail" id="document_update/3">
+
+  <div class="detail-header">
+    <a href="#document_update/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">document_update(CollectionName, DocumentKey, Document)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>document_update(CollectionName :: binary(), DocumentKey :: binary(), Document :: map()) ->
+                   <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+
+      </div>
+
+Partially updates the document identified by document-id. The body of the request must contain a JSON document with the attributes to patch (the patch document). All attributes from the patch document will be added to the existing document if they do not yet exist, and overwritten in the existing document if they do exist there.
   </section>
 </section>
 
