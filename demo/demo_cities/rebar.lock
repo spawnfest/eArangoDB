@@ -1,0 +1,37 @@
+{"1.2.0",
+[{<<"certifi">>,{pkg,<<"certifi">>,<<"2.7.0">>},2},
+ {<<"earangodb">>,
+  {git,"git://github.com/spawnfest/eArangoDB.git",
+       {ref,"3e64972ddf09fa9f27bae2b84e96758a71ac3d80"}},
+  0},
+ {<<"hackney">>,
+  {git,"git://github.com/benoitc/hackney.git",
+       {ref,"01bb4249f595e0aa692db28ef23e70f57ae2d4ed"}},
+  1},
+ {<<"idna">>,{pkg,<<"idna">>,<<"6.1.1">>},2},
+ {<<"jiffy">>,{pkg,<<"jiffy">>,<<"1.0.5">>},1},
+ {<<"metrics">>,{pkg,<<"metrics">>,<<"1.0.1">>},2},
+ {<<"mimerl">>,{pkg,<<"mimerl">>,<<"1.2.0">>},2},
+ {<<"parse_trans">>,{pkg,<<"parse_trans">>,<<"3.3.1">>},2},
+ {<<"ssl_verify_fun">>,{pkg,<<"ssl_verify_fun">>,<<"1.1.6">>},2},
+ {<<"unicode_util_compat">>,{pkg,<<"unicode_util_compat">>,<<"0.7.0">>},2}]}.
+[
+{pkg_hash,[
+ {<<"certifi">>, <<"4622724589CDD8D073277E5D7C923387760E5545FA79359F6CEB047CF46D2611">>},
+ {<<"idna">>, <<"8A63070E9F7D0C62EB9D9FCB360A7DE382448200FBBD1B106CC96D3D8099DF8D">>},
+ {<<"jiffy">>, <<"A69B58FAF7123534C20E1B0B7AE97AC52079CA02ED4B6989B4B380179CD63A54">>},
+ {<<"metrics">>, <<"25F094DEA2CDA98213CECC3AEFF09E940299D950904393B2A29D191C346A8486">>},
+ {<<"mimerl">>, <<"67E2D3F571088D5CFD3E550C383094B47159F3EEE8FFA08E64106CDF5E981BE3">>},
+ {<<"parse_trans">>, <<"16328AB840CC09919BD10DAB29E431DA3AF9E9E7E7E6F0089DD5A2D2820011D8">>},
+ {<<"ssl_verify_fun">>, <<"CF344F5692C82D2CD7554F5EC8FD961548D4FD09E7D22F5B62482E5AEAEBD4B0">>},
+ {<<"unicode_util_compat">>, <<"BC84380C9AB48177092F43AC89E4DFA2C6D62B40B8BD132B1059ECC7232F9A78">>}]},
+{pkg_hash_ext,[
+ {<<"certifi">>, <<"2C413BDDE806405C9678C93FDC15F78FC572001BE1302494C226BEF25359A47D">>},
+ {<<"idna">>, <<"92376EB7894412ED19AC475E4A86F7B413C1B9FBB5BD16DCCD57934157944CEA">>},
+ {<<"jiffy">>, <<"B617A53F46AE84F20D0C38951367DC947A2CF8CFF922AA5C6AC6B64B8B052289">>},
+ {<<"metrics">>, <<"69B09ADDDC4F74A40716AE54D140F93BEB0FB8978D8636EADED0C31B6F099F16">>},
+ {<<"mimerl">>, <<"F278585650AA581986264638EBF698F8BB19DF297F66AD91B18910DFC6E19323">>},
+ {<<"parse_trans">>, <<"07CD9577885F56362D414E8C4C4E6BDF10D43A8767ABB92D24CBE8B24C54888B">>},
+ {<<"ssl_verify_fun">>, <<"BDB0D2471F453C88FF3908E7686F86F9BE327D065CC1EC16FA4540197EA04680">>},
+ {<<"unicode_util_compat">>, <<"25EEE6D67DF61960CF6A794239566599B09E17E668D3700247BC498638152521">>}]}
+].
