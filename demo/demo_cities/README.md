@@ -12,8 +12,9 @@ Start the database using `docker-compose up -d` and then a project using `rebar3
 ```erlang
 demo_cities:setup_env().
 ```
+Any query using AQL can be executed.
 
-Now lets try finding the shortest path between Paris and Warsaw on our graph:
+Let's try finding the shortest path between Paris and Warsaw on our graph:
 
 ```erlang
 ShortestPathParisWarsawQuery = <<"FOR v, e IN OUTBOUND SHORTEST_PATH 'cities/Paris' TO 'cities/Warsaw' GRAPH 'cities_graph' RETURN [v.name, e.distance]">>,
@@ -30,3 +31,28 @@ You should see:
 
 as a result.
 
+
+We can eg see the names of the cities in the distance of of up to 2 jumps from Madrit:
+
+```erlang
+{ok, _} = earangodb:execute_query(<<"FOR v, e IN 1..1 OUTBOUND 'cities/Madrit' GRAPH 'cities_graph' RETURN v.name">>, true, 100).
+```
+
+the result should be:
+
+```erlang
+{ok,[<<"Paris">>,<<"Lyon">>]}
+```
+
+We can see how teh result chnages if we travel outbound instead of inbound, and use Berlin as an example city:
+
+```erlang
+{ok, _} = earangodb:execute_query(<<"FOR v, e IN 1..1 INBOUND 'cities/Berlin' GRAPH 'cities_graph' RETURN v.name">>, true, 100).
+```
+
+the result should be:
+
+```erlang
+{ok,[<<"Paris">>,<<"Cologne">>,<<"Hamburg">>,<<"Lyon">>,
+     <<"Warsaw">>]}
+```
