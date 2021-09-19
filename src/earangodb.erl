@@ -25,7 +25,7 @@
 collections_list() -> earangodb_collections:list().
 
 %%% @doc
-%%% The same as `collection_create(Name, document)`
+%%% The same as `collection_create(Name, document)' function
 -spec collection_create(Name :: binary()) -> ok | {error, Reason :: term()}.
 collection_create(Name) -> collection_create(Name, document).
 
