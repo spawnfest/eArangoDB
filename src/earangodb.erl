@@ -28,7 +28,12 @@
     graph_vertex_delete/3,
     graph_vertex_get/3,
     graph_vertex_update/4,
-    graph_vertex_replace/4
+    graph_vertex_replace/4,
+
+    graph_edge_create/5,
+    graph_edge_delete/3,
+    graph_edge_get/3,
+    graph_edge_update/4
 ]).
 
 -ignore_xref([
@@ -52,7 +57,12 @@
     {?MODULE, graph_vertex_delete, 3},
     {?MODULE, graph_vertex_get, 3},
     {?MODULE, graph_vertex_update, 4},
-    {?MODULE, graph_vertex_replace, 4}
+    {?MODULE, graph_vertex_replace, 4},
+
+    {?MODULE, graph_edge_create, 5},
+    {?MODULE, graph_edge_delete, 3},
+    {?MODULE, graph_edge_get, 3},
+    {?MODULE, graph_edge_update, 4}
 ]).
 
 %%% @doc
@@ -79,7 +89,8 @@ collection_delete(Name) -> earangodb_collections:delete(Name).
 
 %%% @doc
 %%% Creates a new document from the document given in the body, unless there is already a document with the _key given.
--spec document_create(CollectionName :: binary(), Document :: map()) -> ok_response_or_error_reason().
+-spec document_create(CollectionName :: binary(), Document :: map()) ->
+    ok_response_or_error_reason().
 document_create(CollectionName, Document) -> earangodb_documents:create(CollectionName, Document).
 
 %%% @doc
@@ -109,7 +120,8 @@ document_replace(CollectionName, DocumentKey, Document) ->
 
 %%% @doc
 %%% Deletes the specified document with a given key.
--spec document_delete(CollectionName :: binary(), DocumentKey :: binary()) -> ok_response_or_error_reason().
+-spec document_delete(CollectionName :: binary(), DocumentKey :: binary()) ->
+    ok_response_or_error_reason().
 document_delete(CollectionName, DocumentKey) ->
     earangodb_documents:delete(CollectionName, DocumentKey).
 
@@ -180,3 +192,38 @@ graph_vertex_update(GraphName, CollectionName, VertexKey, UpdateDoc) ->
     ok_response_or_error_reason().
 graph_vertex_replace(GraphName, CollectionName, VertexKey, ReplaceDoc) ->
     earangodb_graph_vertexes:replace(GraphName, CollectionName, VertexKey, ReplaceDoc).
+
+%%% @doc
+%%% Creates a new edge in the collection.
+-spec graph_edge_create(
+    GraphName :: binary(),
+    EdgesCollectionName :: binary(),
+    FromVertex :: integer(),
+    ToVertex :: integer(),
+    Properties :: map()
+) -> ok_response_or_error_reason().
+graph_edge_create(GraphName, EdgesCollectionName, FromVertex, ToVertex, Properties) ->
+    earangodb_graph_edges:create(GraphName, EdgesCollectionName, FromVertex, ToVertex, Properties).
+
+%%% @doc
+%%% Removes an edge from the collection.
+-spec graph_edge_delete(GraphName :: binary(), CollectionName :: binary(), EdgeKey :: binary()) ->
+    ok_response_or_error_reason().
+graph_edge_delete(GraphName, CollectionName, EdgeKey) ->
+    earangodb_graph_edges:delete(GraphName, CollectionName, EdgeKey).
+
+%%% @doc
+%%% Gets an edge from the given collection.
+-spec graph_edge_get(GraphName :: binary(), CollectionName :: binary(), EdgeKey :: binary()) ->
+    ok_response_or_error_reason().
+graph_edge_get(GraphName, CollectionName, EdgeKey) ->
+    earangodb_graph_edges:get(GraphName, CollectionName, EdgeKey).
+
+%%% @doc
+%%% Updates an edge from the given collection.
+-spec graph_edge_update(
+    GraphName :: binary(), CollectionName :: binary(), EdgeKey :: binary(), UpdateDoc :: map()
+) ->
+    ok_response_or_error_reason().
+graph_edge_update(GraphName, CollectionName, EdgeKey, UpdateDoc) ->
+    earangodb_graph_edges:update(GraphName, CollectionName, EdgeKey, UpdateDoc).
