@@ -50,7 +50,6 @@ all() ->
 
 add_some_documents_to_collection(_Config) ->
     Document = #{<<"hello">> => <<"word">>},
-    % AfterDecodeColection = jiffy:decode(jiffy:encode(Collection)),
     {ok, _} = earangodb:document_create(?CollectionName, Document),
     ok.
 

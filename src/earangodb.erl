@@ -11,15 +11,18 @@
     collections_list/0,
     collection_create/1,
     collection_create/2,
-    collection_delete/1
-]).
+    collection_delete/1,
 
--export([
     document_create/2,
     document_read/2,
     document_update/3,
     document_replace/3,
-    document_delete/2
+    document_delete/2,
+
+    graphs_list/0,
+    graphs_create/4,
+    graphs_delete/1,
+    graphs_get/1
 ]).
 
 -ignore_xref([
@@ -32,7 +35,12 @@
     {?MODULE, document_read, 2},
     {?MODULE, document_update, 3},
     {?MODULE, document_replace, 3},
-    {?MODULE, document_delete, 2}
+    {?MODULE, document_delete, 2},
+
+    {?MODULE, graphs_list, 0},
+    {?MODULE, graphs_create, 4},
+    {?MODULE, graphs_delete, 1},
+    {?MODULE, graphs_get, 1}
 ]).
 
 %%% @doc
@@ -92,3 +100,31 @@ document_replace(CollectionName, DocumentKey, Document) ->
 -spec document_delete(CollectionName :: binary(), DocumentKey :: binary()) -> maybe_ok().
 document_delete(CollectionName, DocumentKey) ->
     earangodb_documents:delete(CollectionName, DocumentKey).
+
+%%% @doc
+%%% Lists all graphs stored in this database.
+-spec graphs_list() -> maybe_ok().
+graphs_list() -> earangodb_graphs:list().
+
+%%% @doc
+%%% The creation of a graph requires the name of the graph and a definition of its edges.
+-spec graphs_create(
+    GraphName :: binary(),
+    EdgesCollection :: binary(),
+    FromCollections :: [binary()],
+    ToCollections :: [binary()]
+) -> maybe_ok().
+graphs_create(GraphName, EdgesCollection, FromCollections, ToCollections) ->
+    earangodb_graphs:create(GraphName, EdgesCollection, FromCollections, ToCollections).
+
+%%% @doc
+%%% Drops an existing graph object by name.
+-spec graphs_delete(GraphName :: binary()) -> maybe_ok().
+graphs_delete(GraphName) -> earangodb_graphs:delete(GraphName).
+
+% %%% @doc
+% %%% Selects information for a given graph.
+% % Will return the edge definitions as well as the orphan collections.
+% % Or returns a 404 if the graph does not exist.
+-spec graphs_get(GraphName :: binary()) -> maybe_ok().
+graphs_get(GraphName) -> earangodb_graphs:get(GraphName).
