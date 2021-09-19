@@ -10,7 +10,7 @@
     <title>earangodb — eArangoDB v0.1</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-262853a26b.js"></script>
+    <script src="dist/sidebar_items-3c4dd40d61.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -105,7 +105,7 @@ This module provides functions to work with collections, documents and graphs. I
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:maybe_ok/0">maybe_ok/0</a>
+    <a href="#t:ok_response_or_error_reason/0">ok_response_or_error_reason/0</a>
 
   </div>
 
@@ -200,6 +200,51 @@ This module provides functions to work with collections, documents and graphs. I
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#graph_vertex_create/3">graph_vertex_create(GraphName, CollectionName, VertexDocument)</a>
+
+  </div>
+
+    <div class="summary-synopsis">Adds a vertex to the given collection.</div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#graph_vertex_delete/3">graph_vertex_delete(GraphName, CollectionName, VertexKey)</a>
+
+  </div>
+
+    <div class="summary-synopsis">Removes a vertex from the collection.</div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#graph_vertex_get/3">graph_vertex_get(GraphName, CollectionName, VertexKey)</a>
+
+  </div>
+
+    <div class="summary-synopsis">Gets a vertex from the collection with a given key.</div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#graph_vertex_replace/4">graph_vertex_replace(GraphName, CollectionName, VertexKey, ReplaceDoc)</a>
+
+  </div>
+
+    <div class="summary-synopsis">Replaces the data of the specific vertex in the collection.</div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#graph_vertex_update/4">graph_vertex_update(GraphName, CollectionName, VertexKey, UpdateDoc)</a>
+
+  </div>
+
+    <div class="summary-synopsis">Updates the data of the specific vertex in the collection.</div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#graphs_create/4">graphs_create(GraphName, EdgesCollection, FromCollections, ToCollections)</a>
 
   </div>
@@ -249,14 +294,14 @@ This module provides functions to work with collections, documents and graphs. I
 Types
           </h1>
           <div class="types-list">
-<section class="detail" id="t:maybe_ok/0">
+<section class="detail" id="t:ok_response_or_error_reason/0">
 
   <div class="detail-header">
-    <a href="#t:maybe_ok/0" class="detail-link" title="Link to this type">
+    <a href="#t:ok_response_or_error_reason/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">maybe_ok/0</h1>
+    <h1 class="signature">ok_response_or_error_reason/0</h1>
 
 
   </div>
@@ -266,7 +311,7 @@ Types
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>maybe_ok() :: {ok, map()} | {error, Reason :: term()}.</pre>
+          <pre></pre>
 
       </div>
 
@@ -503,6 +548,137 @@ Replaces the specified document with the one in the body, provided there is such
       </div>
 
 Partially updates the document identified by document-id. The body of the request must contain a JSON document with the attributes to patch (the patch document). All attributes from the patch document will be added to the existing document if they do not yet exist, and overwritten in the existing document if they do exist there.
+  </section>
+</section>
+<section class="detail" id="graph_vertex_create/3">
+
+  <div class="detail-header">
+    <a href="#graph_vertex_create/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">graph_vertex_create(GraphName, CollectionName, VertexDocument)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>graph_vertex_create(GraphName :: binary(), CollectionName :: binary(), VertexDocument :: map()) ->
+                       <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+
+      </div>
+
+Adds a vertex to the given collection.
+  </section>
+</section>
+<section class="detail" id="graph_vertex_delete/3">
+
+  <div class="detail-header">
+    <a href="#graph_vertex_delete/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">graph_vertex_delete(GraphName, CollectionName, VertexKey)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>graph_vertex_delete(GraphName :: binary(), CollectionName :: binary(), VertexKey :: binary()) ->
+                       <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+
+      </div>
+
+Removes a vertex from the collection.
+  </section>
+</section>
+<section class="detail" id="graph_vertex_get/3">
+
+  <div class="detail-header">
+    <a href="#graph_vertex_get/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">graph_vertex_get(GraphName, CollectionName, VertexKey)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>graph_vertex_get(GraphName :: binary(), CollectionName :: binary(), VertexKey :: binary()) ->
+                    <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+
+      </div>
+
+Gets a vertex from the collection with a given key.
+  </section>
+</section>
+<section class="detail" id="graph_vertex_replace/4">
+
+  <div class="detail-header">
+    <a href="#graph_vertex_replace/4" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">graph_vertex_replace(GraphName, CollectionName, VertexKey, ReplaceDoc)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>graph_vertex_replace(GraphName :: binary(),
+                     CollectionName :: binary(),
+                     VertexKey :: binary(),
+                     ReplaceDoc :: map()) ->
+                        <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+
+      </div>
+
+Replaces the data of the specific vertex in the collection.
+  </section>
+</section>
+<section class="detail" id="graph_vertex_update/4">
+
+  <div class="detail-header">
+    <a href="#graph_vertex_update/4" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">graph_vertex_update(GraphName, CollectionName, VertexKey, UpdateDoc)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>graph_vertex_update(GraphName :: binary(),
+                    CollectionName :: binary(),
+                    VertexKey :: binary(),
+                    UpdateDoc :: map()) ->
+                       <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+
+      </div>
+
+Updates the data of the specific vertex in the collection.
   </section>
 </section>
 <section class="detail" id="graphs_create/4">

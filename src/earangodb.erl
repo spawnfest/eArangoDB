@@ -5,7 +5,7 @@
 
 -module(earangodb).
 
--type maybe_ok() :: {ok, map()} | {error, Reason :: term()}.
+-type ok_response_or_error_reason() :: {ok, map()} | {error, Reason :: term()}.
 
 -export([
     collections_list/0,
@@ -62,31 +62,31 @@ collections_list() -> earangodb_collections:list().
 
 %%% @doc
 %%% The same as `collection_create(Name, document)' function
--spec collection_create(Name :: binary()) -> maybe_ok().
+-spec collection_create(Name :: binary()) -> ok_response_or_error_reason().
 collection_create(Name) -> collection_create(Name, document).
 
 %%% @doc
 %%% Creates a new collection with a given name and type.
 -spec collection_create(
     Name :: binary(), CollectionType :: earangodb_collections:collection_type()
-) -> maybe_ok().
+) -> ok_response_or_error_reason().
 collection_create(Name, Type) -> earangodb_collections:create(Name, Type).
 
 %%% @doc
 %%% Drops the collection identified by collection-name.
--spec collection_delete(Name :: binary()) -> maybe_ok().
+-spec collection_delete(Name :: binary()) -> ok_response_or_error_reason().
 collection_delete(Name) -> earangodb_collections:delete(Name).
 
 %%% @doc
 %%% Creates a new document from the document given in the body, unless there is already a document with the _key given.
--spec document_create(CollectionName :: binary(), Document :: map()) -> maybe_ok().
+-spec document_create(CollectionName :: binary(), Document :: map()) -> ok_response_or_error_reason().
 document_create(CollectionName, Document) -> earangodb_documents:create(CollectionName, Document).
 
 %%% @doc
 %%% Returns the document identified by document-id. The returned
 %%% document contains three special attribute _key containing key which uniquely identifies a document in a given collection.
 -spec document_read(CollectionName :: binary(), DocumentKey :: binary()) ->
-    maybe_ok().
+    ok_response_or_error_reason().
 document_read(CollectionName, DocumentKey) -> earangodb_documents:read(CollectionName, DocumentKey).
 
 %%% @doc
@@ -96,26 +96,26 @@ document_read(CollectionName, DocumentKey) -> earangodb_documents:read(Collectio
 %%% patch document will be added to the existing document if they do not
 %%% yet exist, and overwritten in the existing document if they do exist there.
 -spec document_update(CollectionName :: binary(), DocumentKey :: binary(), Document :: map()) ->
-    maybe_ok().
+    ok_response_or_error_reason().
 document_update(CollectionName, DocumentKey, Document) ->
     earangodb_documents:update(CollectionName, DocumentKey, Document).
 
 %%% @doc
 %%% Replaces the specified document with the one in the body, provided there is such a document .
 -spec document_replace(CollectionName :: binary(), DocumentKey :: binary(), Document :: map()) ->
-    maybe_ok().
+    ok_response_or_error_reason().
 document_replace(CollectionName, DocumentKey, Document) ->
     earangodb_documents:replace(CollectionName, DocumentKey, Document).
 
 %%% @doc
 %%% Deletes the specified document with a given key.
--spec document_delete(CollectionName :: binary(), DocumentKey :: binary()) -> maybe_ok().
+-spec document_delete(CollectionName :: binary(), DocumentKey :: binary()) -> ok_response_or_error_reason().
 document_delete(CollectionName, DocumentKey) ->
     earangodb_documents:delete(CollectionName, DocumentKey).
 
 %%% @doc
 %%% Lists all graphs stored in this database.
--spec graphs_list() -> maybe_ok().
+-spec graphs_list() -> ok_response_or_error_reason().
 graphs_list() -> earangodb_graphs:list().
 
 %%% @doc
@@ -125,41 +125,41 @@ graphs_list() -> earangodb_graphs:list().
     EdgesCollection :: binary(),
     FromCollections :: [binary()],
     ToCollections :: [binary()]
-) -> maybe_ok().
+) -> ok_response_or_error_reason().
 graphs_create(GraphName, EdgesCollection, FromCollections, ToCollections) ->
     earangodb_graphs:create(GraphName, EdgesCollection, FromCollections, ToCollections).
 
 %%% @doc
 %%% Drops an existing graph object by name.
--spec graphs_delete(GraphName :: binary()) -> maybe_ok().
+-spec graphs_delete(GraphName :: binary()) -> ok_response_or_error_reason().
 graphs_delete(GraphName) -> earangodb_graphs:delete(GraphName).
 
 %%% @doc
 %%% Selects information for a given graph.
 %%% Will return the edge definitions as well as the orphan collections.
 %%% Or returns a 404 if the graph does not exist.
--spec graphs_get(GraphName :: binary()) -> maybe_ok().
+-spec graphs_get(GraphName :: binary()) -> ok_response_or_error_reason().
 graphs_get(GraphName) -> earangodb_graphs:get(GraphName).
 
 %%% @doc
 %%% Adds a vertex to the given collection.
 -spec graph_vertex_create(
     GraphName :: binary(), CollectionName :: binary(), VertexDocument :: map()
-) -> maybe_ok().
+) -> ok_response_or_error_reason().
 graph_vertex_create(GraphName, CollectionName, VertexDocument) ->
     earangodb_graph_vertexes:create(GraphName, CollectionName, VertexDocument).
 
 %%% @doc
 %%% Removes a vertex from the collection.
 -spec graph_vertex_delete(GraphName :: binary(), CollectionName :: binary(), VertexKey :: binary()) ->
-    maybe_ok().
+    ok_response_or_error_reason().
 graph_vertex_delete(GraphName, CollectionName, VertexKey) ->
     earangodb_graph_vertexes:delete(GraphName, CollectionName, VertexKey).
 
 %%% @doc
 %%% Gets a vertex from the collection with a given key.
 -spec graph_vertex_get(GraphName :: binary(), CollectionName :: binary(), VertexKey :: binary()) ->
-    maybe_ok().
+    ok_response_or_error_reason().
 graph_vertex_get(GraphName, CollectionName, VertexKey) ->
     earangodb_graph_vertexes:get(GraphName, CollectionName, VertexKey).
 
@@ -168,7 +168,7 @@ graph_vertex_get(GraphName, CollectionName, VertexKey) ->
 -spec graph_vertex_update(
     GraphName :: binary(), CollectionName :: binary(), VertexKey :: binary(), UpdateDoc :: map()
 ) ->
-    maybe_ok().
+    ok_response_or_error_reason().
 graph_vertex_update(GraphName, CollectionName, VertexKey, UpdateDoc) ->
     earangodb_graph_vertexes:update(GraphName, CollectionName, VertexKey, UpdateDoc).
 
@@ -177,6 +177,6 @@ graph_vertex_update(GraphName, CollectionName, VertexKey, UpdateDoc) ->
 -spec graph_vertex_replace(
     GraphName :: binary(), CollectionName :: binary(), VertexKey :: binary(), ReplaceDoc :: map()
 ) ->
-    maybe_ok().
+    ok_response_or_error_reason().
 graph_vertex_replace(GraphName, CollectionName, VertexKey, ReplaceDoc) ->
     earangodb_graph_vertexes:replace(GraphName, CollectionName, VertexKey, ReplaceDoc).
