@@ -122,9 +122,9 @@ graphs_create(GraphName, EdgesCollection, FromCollections, ToCollections) ->
 -spec graphs_delete(GraphName :: binary()) -> maybe_ok().
 graphs_delete(GraphName) -> earangodb_graphs:delete(GraphName).
 
-% %%% @doc
-% %%% Selects information for a given graph.
-% % Will return the edge definitions as well as the orphan collections.
-% % Or returns a 404 if the graph does not exist.
+%%% @doc
+%%% Selects information for a given graph.
+%%% Will return the edge definitions as well as the orphan collections.
+%%% Or returns a 404 if the graph does not exist.
 -spec graphs_get(GraphName :: binary()) -> maybe_ok().
 graphs_get(GraphName) -> earangodb_graphs:get(GraphName).

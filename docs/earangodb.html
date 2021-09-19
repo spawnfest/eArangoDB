@@ -10,7 +10,7 @@
     <title>earangodb — eArangoDB v0.1</title>
     <link rel="stylesheet" href="dist/elixir-37545fd2f35b96531434.css" />
 
-    <script src="dist/sidebar_items-81fd857e5b.js"></script>
+    <script src="dist/sidebar_items-262853a26b.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -196,6 +196,42 @@ This module provides functions to work with collections, documents and graphs. I
   </div>
 
     <div class="summary-synopsis">Partially updates the document identified by document-id. The body of the request must contain a JSON document with the attributes to patch (the patch document). All attributes from the patch document will be added to the existing document if they do not yet exist, and overwritten in the existing document if they do exist there.</div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#graphs_create/4">graphs_create(GraphName, EdgesCollection, FromCollections, ToCollections)</a>
+
+  </div>
+
+    <div class="summary-synopsis">The creation of a graph requires the name of the graph and a definition of its edges.</div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#graphs_delete/1">graphs_delete(GraphName)</a>
+
+  </div>
+
+    <div class="summary-synopsis">Drops an existing graph object by name.</div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#graphs_get/1">graphs_get(GraphName)</a>
+
+  </div>
+
+    <div class="summary-synopsis">Selects information for a given graph. Will return the edge definitions as well as the orphan collections. Or returns a 404 if the graph does not exist.</div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#graphs_list/0">graphs_list()</a>
+
+  </div>
+
+    <div class="summary-synopsis">Lists all graphs stored in this database.</div>
 
 </div>
 
@@ -467,6 +503,106 @@ Replaces the specified document with the one in the body, provided there is such
       </div>
 
 Partially updates the document identified by document-id. The body of the request must contain a JSON document with the attributes to patch (the patch document). All attributes from the patch document will be added to the existing document if they do not yet exist, and overwritten in the existing document if they do exist there.
+  </section>
+</section>
+<section class="detail" id="graphs_create/4">
+
+  <div class="detail-header">
+    <a href="#graphs_create/4" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">graphs_create(GraphName, EdgesCollection, FromCollections, ToCollections)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>graphs_create(GraphName :: binary(),
+              EdgesCollection :: binary(),
+              FromCollections :: [binary()],
+              ToCollections :: [binary()]) ->
+                 <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+
+      </div>
+
+The creation of a graph requires the name of the graph and a definition of its edges.
+  </section>
+</section>
+<section class="detail" id="graphs_delete/1">
+
+  <div class="detail-header">
+    <a href="#graphs_delete/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">graphs_delete(GraphName)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>graphs_delete(GraphName :: binary()) -> <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+
+      </div>
+
+Drops an existing graph object by name.
+  </section>
+</section>
+<section class="detail" id="graphs_get/1">
+
+  <div class="detail-header">
+    <a href="#graphs_get/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">graphs_get(GraphName)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>graphs_get(GraphName :: binary()) -> <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+
+      </div>
+
+Selects information for a given graph. Will return the edge definitions as well as the orphan collections. Or returns a 404 if the graph does not exist.
+  </section>
+</section>
+<section class="detail" id="graphs_list/0">
+
+  <div class="detail-header">
+    <a href="#graphs_list/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">graphs_list()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>graphs_list() -> <a href="#t:maybe_ok/0">maybe_ok</a>().</pre>
+
+      </div>
+
+Lists all graphs stored in this database.
   </section>
 </section>
 
