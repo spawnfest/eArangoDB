@@ -22,26 +22,18 @@
 
 -spec list() -> [collection_info()].
 list() ->
-    Url = earangodb_http_client:build_url("/_api/collection"),
-    Headers = earangodb_http_client:build_headers(),
-    Response = earangodb_http_client:send_request_and_process_response(get, Url, Headers, <<"">>),
-    {ok, 200, #{<<"result">> := Result}} = Response,
+    {ok, #{<<"result">> := Result}} = earangodb_http_client:send_request_and_unwrap_response(get, "/_api/collection", <<"">>),
     Result.
 
 -spec create(Name :: binary(), CollectionType :: collection_type()) -> {ok, Response :: map()} | {error, term()}.
 create(Name, CollectionType) ->
-    Url = earangodb_http_client:build_url("/_api/collection"),
-    Headers = earangodb_http_client:build_headers(),
     Body = jiffy:encode(#{name => Name, type => collection_type(CollectionType)}),
-    Response = earangodb_http_client:send_request_and_process_response(post, Url, Headers, Body),
-    earangodb_http_client:unwrap_response(Response).
+    earangodb_http_client:send_request_and_unwrap_response(post, "/_api/collection", Body).
 
 collection_type(document) -> 2;
 collection_type(edge) -> 3.
 
 -spec delete(Name :: binary()) -> {ok, Response :: map()} | {error, term()}.
 delete(Name) ->
-    Url = earangodb_http_client:build_url("/_api/collection/" ++ binary_to_list(Name)),
-    Headers = earangodb_http_client:build_headers(),
-    Response = earangodb_http_client:send_request_and_process_response(delete, Url, Headers, <<"">>),
-    earangodb_http_client:unwrap_response(Response).
+    Url = "/_api/collection/" ++ binary_to_list(Name),
+    earangodb_http_client:send_request_and_unwrap_response(delete, Url, <<"">>).

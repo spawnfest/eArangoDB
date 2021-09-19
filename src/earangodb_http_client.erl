@@ -6,12 +6,15 @@
 
 -export([
     get_token/2,
-    send_request_and_process_response/4,
-    build_headers/0,
+    send_request_and_unwrap_response/3,
     build_url/1,
-    unwrap_response/1,
     maybe_binary_to_lst/1
 ]).
+
+send_request_and_unwrap_response(Method, UrlPath, Body) ->
+    Url = build_url(UrlPath),
+    Response = send_request_and_process_response(Method, Url, build_headers(), Body),
+    unwrap_response(Response).
 
 get_token(User, Password) ->
     ReqBody = jiffy:encode(#{username => User, password => Password}),
