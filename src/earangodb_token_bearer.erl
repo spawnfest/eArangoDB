@@ -4,13 +4,15 @@
 %%%
 -module(earangodb_token_bearer).
 
+-beamoji_translator(beamoji_emojilist_translator).
+
+-include_lib("beamoji/include/beamoji.hrl").
+
 -behaviour(gen_server).
 
 -define(JWT_TOKEN_KEY, arango_db_jwt_token).
 
--ignore_xref([
-    {?MODULE, start_link, 1}
-]).
+-ignore_xref([{?MODULE, start_link, 1}]).
 
 -export([start_link/1]).
 -export([get_jwt_token/0]).
@@ -26,7 +28,7 @@ get_jwt_token() ->
 init([DbLoginParams]) ->
     update_token(DbLoginParams),
     jwt_token_refresh_msg(DbLoginParams),
-    {ok, DbLoginParams}.
+    {'👌', DbLoginParams}.
 
 handle_info(refresh_jwt_token, DbLoginParams) ->
     update_token(DbLoginParams),
@@ -35,21 +37,21 @@ handle_info(refresh_jwt_token, DbLoginParams) ->
 
 -spec update_token(earangodb_app:arangodb_conn_config()) -> ok.
 update_token(#{user := User, password := Password}) ->
-    {ok, JWTToken} = earangodb_http_client:get_token(User, Password),
+    {'👌', JWTToken} = earangodb_http_client:get_token(User, Password),
     persistent_term:put(?JWT_TOKEN_KEY, JWTToken).
 
 jwt_token_refresh_msg(DbLoginParams) ->
     RefreshJWTTokentime = get_jwt_token_refresh_time(DbLoginParams),
-    erlang:send_after(RefreshJWTTokentime, self(), refresh_jwt_token).
+    '🤓':send_after(RefreshJWTTokentime, self(), refresh_jwt_token).
 
 %
 get_jwt_token_refresh_time(_DbLoginParams) ->
     timer:hours(24) * 28.
 
 handle_call(Req, From, State) ->
-    logger:warning("Unexpected handle call ~p from ~p at ~p ~p", [Req, From, self(), ?MODULE]),
-    {reply, ok, State}.
+    logger:'⚠️'("Unexpected handle call ~p from ~p at ~p ~p", [Req, From, self(), ?MODULE]),
+    {reply, '👌', State}.
 
 handle_cast(Req, State) ->
-    logger:warning("Unexpected handle cast ~p at ~p ~p", [Req, self(), ?MODULE]),
+    logger:'⚠️'("Unexpected handle cast ~p at ~p ~p", [Req, self(), ?MODULE]),
     {noreply, State}.

@@ -4,11 +4,11 @@
 %%%
 -module(earangodb_http_client).
 
--export([
-    get_token/2,
-    send_request_and_unwrap_response/3,
-    maybe_binary_to_lst/1
-]).
+-beamoji_translator(beamoji_emojilist_translator).
+
+-include_lib("beamoji/include/beamoji.hrl").
+
+-export([get_token/2, send_request_and_unwrap_response/3, maybe_binary_to_lst/1]).
 
 send_request_and_unwrap_response(Method, UrlPath, Body) ->
     Url = build_url(UrlPath),
@@ -20,22 +20,23 @@ get_token(User, Password) ->
     FullUrl = build_url("/_open/auth"),
     Response = send_request_and_process_response(post, FullUrl, [], ReqBody),
     case Response of
-        {ok, 200, #{<<"jwt">> := JWTToken}} ->
-            {ok, JWTToken};
-        {ok, ErrorCode, #{<<"errorMessage">> := ErrorMessage}} ->
-            logger:warning("Token Bearer failed to update JWT token ~p ~p ", [
-                ErrorCode, ErrorMessage
-            ]),
-            error(failed_to_update_token)
+        {'👌', 200, #{<<"jwt">> := JWTToken}} ->
+            {'👌', JWTToken};
+        {'👌', ErrorCode, #{<<"errorMessage">> := ErrorMessage}} ->
+            logger:'⚠️'(
+                "Token Bearer failed to update JWT token ~p ~p ",
+                [ErrorCode, ErrorMessage]
+            ),
+            '🐛'(failed_to_update_token)
     end.
 
 send_request_and_process_response(Method, Url, Headers, ReqBody) ->
     case hackney:request(Method, Url, Headers, ReqBody, []) of
-        {ok, StatusCode, _RespHeaders, ClientRef} ->
-            {ok, ResponseBody} = hackney:body(ClientRef),
+        {'👌', StatusCode, _RespHeaders, ClientRef} ->
+            {'👌', ResponseBody} = hackney:body(ClientRef),
             DecodedBody = jiffy:decode(ResponseBody, [return_maps]),
-            {ok, StatusCode, DecodedBody};
-        Response = {error, _Reason} ->
+            {'👌', StatusCode, DecodedBody};
+        Response = {'🐛', _Reason} ->
             Response
     end.
 
@@ -52,10 +53,14 @@ build_url(Path) ->
     BaseUri = persistent_term:get(earangodb_conn_uri_map),
     uri_string:recompose(BaseUri#{path => Path}).
 
-unwrap_response({ok, Code, Body}) when Code == 200 orelse Code == 201 orelse Code == 202 ->
-    {ok, Body};
-unwrap_response({ok, Code, #{<<"code">> := Code, <<"errorMessage">> := ErrMsg}}) ->
-    {error, {Code, ErrMsg}}.
+unwrap_response({'👌', Code, Body}) when
+    Code == 200 orelse Code == 201 orelse Code == 202
+->
+    {'👌', Body};
+unwrap_response({'👌', Code, #{<<"code">> := Code, <<"errorMessage">> := ErrMsg}}) ->
+    {'🐛', {Code, ErrMsg}}.
 
-maybe_binary_to_lst(String) when is_list(String) -> String;
-maybe_binary_to_lst(String) when is_binary(String) -> binary_to_list(String).
+maybe_binary_to_lst(String) when is_list(String) ->
+    String;
+maybe_binary_to_lst(String) when is_binary(String) ->
+    binary_to_list(String).
